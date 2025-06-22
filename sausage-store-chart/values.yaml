@@ -9,7 +9,7 @@ frontend:
   service:
     port: 80
   ingress:
-    host: b10nicle.students-projects.ru
+    host: b10nicle.2sem.students-projects.ru
     path: /
     pathType: Prefix
     tlsSecretName: 2sem-students-projects-wildcard-secret
