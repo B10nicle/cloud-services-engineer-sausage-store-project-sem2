@@ -2,7 +2,7 @@ global:
   imagePullPolicy: Always
 
 frontend:
-### В чарте frontend отсутствуют некоторые важные файлы. Поймите какие и опишите их.
+  ### В чарте frontend отсутствуют некоторые важные файлы. Поймите какие и опишите их.
   replicas: 1
   revisionHistoryLimit: 15
   strategy:
@@ -78,11 +78,30 @@ backend:
             memory: "512Mi"
 
 backend-report:
-### Опишите значения для backend-report
-### Приложение должно использовать стратегию Recreate
-### Приложение использует переменную PORT - порт, на котором оно запустится и DB - Uri-подключение к mongodb.
-### DB положите в Secret, PORT в ConfigMap
-### Опишите HPA для backend-report
+  strategy:
+    type: Recreate
+  image: b10nicle/sausage-backend-report:latest
+  imagePullPolicy: Always
+  containerPort: 8081
+  config:
+    port: "8081"
+  secret:
+    db: "mongodb://root:rootpassword@mongodb:27017"
+  service:
+    type: ClusterIP
+    port: 8081
+  hpa:
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 75
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "128Mi"
+    limits:
+      cpu: "250m"
+      memory: "256Mi"
 
 infra:
   postgresql:
