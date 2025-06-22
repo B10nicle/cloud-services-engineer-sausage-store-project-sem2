@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Release.Name }}-frontend-service
+  name: {{ .Release.Name }}-{{ .Chart.Name }}-service
 spec:
   type: ClusterIP
   selector:
-    app: {{ .Release.Name }}-frontend-service
+    app: {{ .Release.Name }}-{{ .Chart.Name }}-service
   ports:
     - name: http
       protocol: TCP
